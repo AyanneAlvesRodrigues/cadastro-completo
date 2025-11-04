@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atividade SENAI - Formulários (Código Único)</title>
+    <title>Atividade SENAI - Formulários (Refatorado)</title>
     
     <style>
         /* COMENTÁRIO: Reset básico para todos os elementos */
@@ -19,26 +19,39 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* COMENTÁRIO: Fundo da página, cor azul forte */
+        /* COMENTÁRIO: Fundo claro (branco/cinza claro) para a página, seguindo a referência */
         body {
-            background-color: #004587; /* Azul SENAI */
+            background-color: #f8f9fa; 
             display: flex;
-            flex-direction: column; /* Organiza os formulários em coluna */
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            padding: 0; /* Remove padding para o header ocupar a largura total */
             min-height: 100vh;
-            padding: 40px 20px;
         }
 
-        /* COMENTÁRIO: Estilo para o contêiner principal - centraliza o conteúdo */
+        /* COMENTÁRIO: Estilo da barra de cabeçalho azul (imita o topo da página SENAI) */
+        .header-senai {
+            width: 100%;
+            background-color: #004587; /* Azul SENAI */
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* COMENTÁRIO: Estilo para o contêiner principal do formulário */
         .container-principal {
             width: 100%;
-            max-width: 600px;
-            margin-bottom: 50px; /* Espaçamento entre os formulários */
-            scroll-margin-top: 50px; /* Ajuda na navegação com âncoras */
+            max-width: 700px; /* Largura maior para um visual mais aberto */
+            padding: 0 15px;
+            margin-bottom: 40px;
+            scroll-margin-top: 50px;
         }
 
         /* COMENTÁRIO: Estilo para o cartão/caixa do formulário */
@@ -46,34 +59,35 @@
             background-color: #ffffff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-top: 5px solid #ff7b00; /* Linha de destaque */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            border-top: 5px solid #ff7b00; /* Laranja de destaque */
         }
 
         /* COMENTÁRIO: Títulos principais */
         h2 {
             text-align: center;
             color: #004587;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ccc;
+            margin-bottom: 25px;
             padding-bottom: 10px;
+            font-size: 1.8em;
+            border-bottom: 1px solid #e9ecef;
         }
 
         h3 {
             color: #004587;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            border-left: 5px solid #ff7b00; /* Laranja de destaque */
-            padding-left: 10px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 500;
         }
 
         /* COMENTÁRIO: Estilo para os rótulos (labels) */
         label {
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
             margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: #495057;
         }
 
         /* COMENTÁRIO: Estilo para os campos de input, select e textarea */
@@ -85,34 +99,41 @@
         select, 
         textarea {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
+            padding: 12px;
+            border: 1px solid #ced4da; /* Borda clara */
             border-radius: 4px;
             box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        /* COMENTÁRIO: Efeito de foco simples para o campo */
+        input:focus, select:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         }
 
         textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
         }
 
-        /* COMENTÁRIO: Estilo para o botão de Enviar Inscrição */
+        /* COMENTÁRIO: Estilo para o botão principal de Enviar Inscrição */
         .btn-enviar {
-            background-color: #ff7b00; /* Laranja SENAI */
+            background-color: #007bff; /* Azul para ação principal (pode ser #004587) */
             color: white;
             padding: 12px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
-            font-size: 16px;
-            margin-top: 10px;
+            font-size: 1em;
+            margin-top: 20px;
+            font-weight: bold;
         }
 
-        /* COMENTÁRIO: Efeito hover simples para o botão */
         .btn-enviar:hover {
-            background-color: #e66a00;
+            background-color: #0056b3;
         }
 
         /* COMENTÁRIO: Link "Já Sou Aluno!" */
@@ -123,13 +144,9 @@
         }
 
         .link-aluno a {
-            color: #004587;
+            color: #ff7b00; /* Laranja para link secundário */
             text-decoration: none;
             font-weight: bold;
-        }
-
-        .link-aluno a:hover {
-            text-decoration: underline;
         }
 
         /* --- Estilos da Página de Confirmação --- */
@@ -138,31 +155,35 @@
         }
 
         .mensagem-agradecimento {
-            font-size: 1.5em;
-            color: #004587;
+            font-size: 1.6em;
+            color: #28a745; /* Verde para sucesso */
             margin: 20px 0;
             font-weight: bold;
         }
-
-        /* --- Estilos do Formulário de Enriquecimento e Botões Gerais --- */
-
+        
         /* COMENTÁRIO: Para campos de rádio e checkbox, alinha o label ao lado */
         .inline-label {
-            display: inline;
+            display: inline-block;
             margin-right: 15px;
             font-weight: normal;
         }
 
-        .checkbox-group label {
-            display: inline-block;
-            margin-right: 15px;
+        .checkbox-group {
+            margin-top: 10px;
         }
+
+        .checkbox-group label {
+             margin-top: 0;
+             margin-bottom: 5px;
+             font-weight: normal;
+        }
+
 
         .grupo-botoes {
             display: flex;
             justify-content: space-between;
             gap: 10px;
-            margin-top: 25px;
+            margin-top: 30px;
         }
 
         /* Estilo para todos os botões e links que simulam botões */
@@ -171,72 +192,89 @@
             padding: 12px;
             border-radius: 4px;
             border: none;
-            font-size: 16px;
+            font-size: 1em;
             text-align: center;
             text-decoration: none;
             line-height: normal;
             display: inline-block;
             cursor: pointer;
+            font-weight: 600;
         }
-
+        
+        /* Botões de Ação */
         .btn-gravar {
-            background-color: #28a745; /* Verde para Gravar */
+            background-color: #004587; /* Azul SENAI para Gravar */
             color: white;
         }
 
         .btn-gravar:hover {
-            background-color: #1e7e34;
+            background-color: #003366;
         }
 
         .btn-cancelar {
-            background-color: #dc3545; /* Vermelho para Cancelar */
+            background-color: #6c757d; /* Cinza para Cancelar */
             color: white;
         }
 
         .btn-cancelar:hover {
-            background-color: #c82333;
+            background-color: #5a6268;
         }
         
-        /* Cor para o botão Voltar, usado nas 3 páginas */
         .btn-voltar {
-            background-color: #6c757d; /* Cinza */
+            background-color: #ff7b00; /* Laranja para Voltar */
             color: white;
         }
         
         .btn-voltar:hover {
-            background-color: #5a6268;
+            background-color: #e66a00;
+        }
+        
+        /* Estilo para agrupar radio buttons e checkboxes com margem */
+        .radio-group, .checkbox-group {
+            padding: 10px 0;
+            border: 1px solid #f0f0f0;
+            border-radius: 4px;
+            padding-left: 10px;
+        }
+        
+        .radio-group input[type="radio"], .checkbox-group input[type="checkbox"] {
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
+    <header class="header-senai">
+        SENAI - Desenvolvimento de Sistemas I
+    </header>
 
     <section id="inscricao" class="container-principal">
         <div class="card-formulario">
-            <h2>1. Inscrição SENAI</h2>
+            <h2>1. Cadastro de Candidato</h2>
             
             <form action="#confirmacao" method="GET">
                 <label for="nome">Nome completo:</label>
-                <input type="text" id="nome" name="nome" value="JOAD" required>
+                <input type="text" id="nome" name="nome" value="JOAD" placeholder="Seu nome completo" required>
 
                 <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" value="naomsponde@slDS.com" required>
+                <input type="email" id="email" name="email" value="naomsponde@slDS.com" placeholder="seu.email@exemplo.com" required>
 
                 <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" value="(81) 99679-3767" required>
+                <input type="tel" id="telefone" name="telefone" value="(81) 99679-3767" placeholder="(00) 00000-0000" required>
 
                 <label for="curso">Curso desejado:</label>
                 <select id="curso" name="curso" required>
-                    <option value="ti">Tecnico em informática</option>
+                    <option value="ti">Técnico em Informática</option>
                     <option value="elet">Técnico em Eletrotécnica</option>
+                    <option value="log">Técnico em Logística</option>
                 </select>
 
                 <label for="observacoes">Observações:</label>
-                <textarea id="observacoes" name="observacoes">TESTE</textarea>
+                <textarea id="observacoes" name="observacoes" placeholder="Comentários adicionais sobre a inscrição">TESTE</textarea>
 
-                <button type="submit" class="btn-enviar">Enviar Inscrição</button>
+                <button type="submit" class="btn-enviar">ENVIAR INSCRIÇÃO</button>
             </form>
             
-            <p class="link-aluno"><a href="#enriquecimento">Já Sou aluno!</a></p>
+            <p class="link-aluno"><a href="#enriquecimento">Já Sou Aluno! (Acessar Enriquecimento de Dados)</a></p>
         </div>
     </section>
 
@@ -244,7 +282,7 @@
         <div class="card-confirmacao">
             <h2>2. Confirmação de Inscrição</h2>
             
-            <h3>Processo Concluído!</h3>
+            <h3>SUCESSO!</h3>
             <p class="mensagem-agradecimento">O SENAI AGRADECE SUA INSCRIÇÃO!!!</p>
             
             <a href="#inscricao" class="btn-voltar">Voltar para página principal</a>
@@ -253,13 +291,13 @@
 
     <section id="enriquecimento" class="container-principal">
         <div class="card-formulario">
-            <h2>3. Enriquecimento do Cadastro</h2>
+            <h2>3. Enriquecimento do Cadastro (Já Sou Aluno)</h2>
             
             <form action="#" method="POST">
                 
                 <h3>1. Dados Pessoais</h3>
                 <label for="nome_completo">Nome completo:</label>
-                <input type="text" id="nome_completo" name="nome_completo">
+                <input type="text" id="nome_completo" name="nome_completo" required>
 
                 <label for="data_nasc">Data de Nascimento:</label>
                 <input type="date" id="data_nasc" name="data_nasc">
@@ -329,10 +367,10 @@
                 <label for="linkedin">Linkedin (URL):</label>
                 <input type="url" id="linkedin" name="linkedin">
 
-                <h3>4. Outras Informações (Opcional)</h3>
+                <h3>4. Outras Informações</h3>
                 
                 <label>POSSUI CNH? (RADIO)</label>
-                <div style="margin-bottom: 15px;">
+                <div class="radio-group">
                     <input type="radio" id="cnh_sim" name="cnh" value="sim"> <label for="cnh_sim" class="inline-label">Sim</label>
                     <input type="radio" id="cnh_nao" name="cnh" value="nao"> <label for="cnh_nao" class="inline-label">Não</label>
                 </div>
@@ -346,11 +384,11 @@
                     <input type="checkbox" id="cnh_e" name="cnh_cat[]" value="E"> <label for="cnh_e" class="inline-label">E</label>
                 </div>
 
-                <label for="tipo_sanguineo">Tipo sanguineo:</label>
+                <label for="tipo_sanguineo">Tipo sanguíneo:</label>
                 <input type="text" id="tipo_sanguineo" name="tipo_sanguineo">
                 
                 <label>PCD (radio):</label>
-                <div style="margin-bottom: 15px;">
+                <div class="radio-group">
                     <input type="radio" id="pcd_sim" name="pcd" value="sim"> <label for="pcd_sim" class="inline-label">Sim</label>
                     <input type="radio" id="pcd_nao" name="pcd" value="nao"> <label for="pcd_nao" class="inline-label">Não</label>
                 </div>
@@ -360,13 +398,12 @@
 
                 <div class="grupo-botoes">
                     <button type="submit" class="btn-gravar">GRAVAR</button>
-                    <button type="reset" class="btn-cancelar">CANCELAR (LIMPA O FORM)</button>
+                    <button type="reset" class="btn-cancelar">CANCELAR</button>
                     <a href="#inscricao" class="btn-voltar">VOLTAR</a> 
                 </div>
             </form>
         </div>
     </section>
-
 </body>
 </html>
 </body>
