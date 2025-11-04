@@ -2,91 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=<!DOCTYPE html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atividade SENAI - Formulários (Refatorado)</title>
+    <title>ATIVIDADE SIMPLES SENAI</title>
     
     <style>
-        /* COMENTÁRIO: Reset básico para todos os elementos */
+        /* COMENTÁRIO: Estilos BÁSICOS */
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
         }
 
-        /* COMENTÁRIO: Fundo claro (branco/cinza claro) para a página, seguindo a referência */
+        /* COMENTÁRIO: Fundo da página e centralização */
         body {
-            background-color: #f8f9fa; 
+            background-color: #002244; /* Azul Marinho / Azul Escuro Forte */
+            padding: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0; /* Remove padding para o header ocupar a largura total */
-            min-height: 100vh;
         }
 
-        /* COMENTÁRIO: Estilo da barra de cabeçalho azul (imita o topo da página SENAI) */
-        .header-senai {
+        /* COMENTÁRIO: Contêiner principal para cada formulário */
+        .container {
             width: 100%;
-            background-color: #004587; /* Azul SENAI */
-            color: white;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: 600;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        /* COMENTÁRIO: Estilo para o contêiner principal do formulário */
-        .container-principal {
-            width: 100%;
-            max-width: 700px; /* Largura maior para um visual mais aberto */
-            padding: 0 15px;
+            max-width: 500px;
+            background-color: white;
+            padding: 20px;
             margin-bottom: 40px;
-            scroll-margin-top: 50px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            scroll-margin-top: 20px; /* Para a navegação de âncoras */
         }
 
-        /* COMENTÁRIO: Estilo para o cartão/caixa do formulário */
-        .card-formulario, .card-confirmacao {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
-            border-top: 5px solid #ff7b00; /* Laranja de destaque */
-        }
-
-        /* COMENTÁRIO: Títulos principais */
+        /* COMENTÁRIO: Títulos */
         h2 {
+            color: #002244; /* Azul Escuro */
             text-align: center;
-            color: #004587;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
             padding-bottom: 10px;
-            font-size: 1.8em;
-            border-bottom: 1px solid #e9ecef;
         }
 
         h3 {
-            color: #004587;
-            margin-top: 25px;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-            font-weight: 500;
+            color: #333;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ffaa00; /* Destaque laranja simples */
+            padding-left: 5px;
         }
 
-        /* COMENTÁRIO: Estilo para os rótulos (labels) */
+        /* COMENTÁRIO: Estilo para Rótulos (Labels) */
         label {
             display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #495057;
+            margin-top: 10px;
+            font-weight: bold;
         }
-
-        /* COMENTÁRIO: Estilo para os campos de input, select e textarea */
+        
+        /* COMENTÁRIO: Estilo para Campos de Texto e Seleção */
         input[type="text"], 
         input[type="email"], 
         input[type="tel"],
@@ -95,316 +76,192 @@
         select, 
         textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ced4da; /* Borda clara */
-            border-radius: 4px;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            box-sizing: border-box; /* Para evitar que padding aumente a largura */
         }
 
-        /* COMENTÁRIO: Efeito de foco simples para o campo */
-        input:focus, select:focus, textarea:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        /* COMENTÁRIO: Estilo para o botão principal de Enviar Inscrição */
-        .btn-enviar {
-            background-color: #007bff; /* Azul para ação principal (pode ser #004587) */
-            color: white;
-            padding: 12px 20px;
+        /* COMENTÁRIO: Estilo do Botão Principal (Enviar Inscrição) */
+        .btn-principal {
+            background-color: #ffaa00; /* Laranja de destaque */
+            color: black;
+            padding: 10px;
             border: none;
-            border-radius: 4px;
+            border-radius: 3px;
             cursor: pointer;
             width: 100%;
-            font-size: 1em;
             margin-top: 20px;
             font-weight: bold;
         }
 
-        .btn-enviar:hover {
-            background-color: #0056b3;
+        .btn-principal:hover {
+            background-color: #e69900;
         }
 
-        /* COMENTÁRIO: Link "Já Sou Aluno!" */
-        .link-aluno {
+        /* COMENTÁRIO: Links secundários (Já sou aluno, Voltar) */
+        .link-secundario {
+            display: block;
             text-align: center;
             margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .link-aluno a {
-            color: #ff7b00; /* Laranja para link secundário */
+            color: #002244;
             text-decoration: none;
-            font-weight: bold;
         }
 
-        /* --- Estilos da Página de Confirmação --- */
-        .card-confirmacao {
+        .link-secundario:hover {
+            text-decoration: underline;
+        }
+
+        /* COMENTÁRIO: Estilo da Confirmação */
+        .confirmacao {
             text-align: center;
         }
 
-        .mensagem-agradecimento {
-            font-size: 1.6em;
-            color: #28a745; /* Verde para sucesso */
+        .mensagem-ok {
+            font-size: 1.2em;
+            color: #002244;
             margin: 20px 0;
             font-weight: bold;
         }
         
-        /* COMENTÁRIO: Para campos de rádio e checkbox, alinha o label ao lado */
-        .inline-label {
-            display: inline-block;
-            margin-right: 15px;
-            font-weight: normal;
-        }
-
-        .checkbox-group {
-            margin-top: 10px;
-        }
-
-        .checkbox-group label {
-             margin-top: 0;
-             margin-bottom: 5px;
-             font-weight: normal;
-        }
-
-
+        /* COMENTÁRIO: Estilo para grupo de botões (Enriquecimento) */
         .grupo-botoes {
             display: flex;
-            justify-content: space-between;
             gap: 10px;
-            margin-top: 30px;
-        }
-
-        /* Estilo para todos os botões e links que simulam botões */
-        .grupo-botoes button, .grupo-botoes a, .btn-voltar {
-            flex-grow: 1;
-            padding: 12px;
-            border-radius: 4px;
-            border: none;
-            font-size: 1em;
-            text-align: center;
-            text-decoration: none;
-            line-height: normal;
-            display: inline-block;
-            cursor: pointer;
-            font-weight: 600;
+            margin-top: 20px;
         }
         
-        /* Botões de Ação */
+        .grupo-botoes button, .grupo-botoes a {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 3px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            line-height: normal; /* Para alinhar o texto do link */
+        }
+
         .btn-gravar {
-            background-color: #004587; /* Azul SENAI para Gravar */
+            background-color: #007700; /* Verde */
             color: white;
+            border: none;
         }
-
-        .btn-gravar:hover {
-            background-color: #003366;
-        }
-
+        
         .btn-cancelar {
-            background-color: #6c757d; /* Cinza para Cancelar */
+            background-color: #cc0000; /* Vermelho */
             color: white;
-        }
-
-        .btn-cancelar:hover {
-            background-color: #5a6268;
+            border: none;
         }
         
         .btn-voltar {
-            background-color: #ff7b00; /* Laranja para Voltar */
+            background-color: #888; /* Cinza */
             color: white;
         }
         
-        .btn-voltar:hover {
-            background-color: #e66a00;
-        }
-        
-        /* Estilo para agrupar radio buttons e checkboxes com margem */
-        .radio-group, .checkbox-group {
-            padding: 10px 0;
-            border: 1px solid #f0f0f0;
-            border-radius: 4px;
-            padding-left: 10px;
-        }
-        
-        .radio-group input[type="radio"], .checkbox-group input[type="checkbox"] {
-            margin-right: 5px;
+        /* COMENTÁRIO: Estilos para Rádio e Checkbox */
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            margin-right: 15px;
+            font-weight: normal;
         }
     </style>
 </head>
 <body>
-    <header class="header-senai">
-        SENAI - Desenvolvimento de Sistemas I
-    </header>
 
-    <section id="inscricao" class="container-principal">
-        <div class="card-formulario">
-            <h2>1. Cadastro de Candidato</h2>
-            
-            <form action="#confirmacao" method="GET">
-                <label for="nome">Nome completo:</label>
-                <input type="text" id="nome" name="nome" value="ayanne" placeholder="Seu nome completo" required>
+    <section id="inscricao" class="container">
+        <h2>1. Inscrição de Candidato</h2>
+        
+        <form action="#confirmacao" method="GET">
+            <label for="nome">Nome completo:</label>
+            <input type="text" id="nome" name="nome" value="JOAD" required>
 
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" value="email@123S.com" placeholder="seu.email@exemplo.com" required>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" value="naomsponde@slDS.com" required>
 
-                <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" value="(81) 12345678" placeholder="(00) 00000-0000" required>
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" value="(81) 99679-3767" required>
 
-                <label for="curso">Curso desejado:</label>
-                <select id="curso" name="curso" required>
-                    <option value="ti">Técnico em Informática</option>
-                    <option value="elet">Técnico em Eletrotécnica</option>
-                    <option value="log">Técnico em Logística</option>
-                </select>
+            <label for="curso">Curso desejado:</label>
+            <select id="curso" name="curso" required>
+                <option value="ti">Técnico em Informática</option>
+                <option value="elet">Técnico em Eletrotécnica</option>
+            </select>
 
-                <label for="observacoes">Observações:</label>
-                <textarea id="observacoes" name="observacoes" placeholder="Comentários adicionais sobre a inscrição">TESTE</textarea>
+            <label for="observacoes">Observações:</label>
+            <textarea id="observacoes" name="observacoes">TESTE</textarea>
 
-                <button type="submit" class="btn-enviar">ENVIAR INSCRIÇÃO</button>
-            </form>
-            
-            <p class="link-aluno"><a href="#enriquecimento">Já Sou Aluno! (Acessar Enriquecimento de Dados)</a></p>
-        </div>
+            <button type="submit" class="btn-principal">Enviar Inscrição</button>
+        </form>
+        
+        <a href="#enriquecimento" class="link-secundario">Já Sou Aluno!</a>
     </section>
 
-    <section id="confirmacao" class="container-principal">
-        <div class="card-confirmacao">
-            <h2>2. Confirmação de Inscrição</h2>
-            
-            <h3>SUCESSO!</h3>
-            <p class="mensagem-agradecimento">O SENAI AGRADECE SUA INSCRIÇÃO!!!</p>
-            
-            <a href="#inscricao" class="btn-voltar">Voltar para página principal</a>
-        </div>
+    <section id="confirmacao" class="container confirmacao">
+        <h2>2. Confirmação</h2>
+        
+        <p class="mensagem-ok">O SENAI AGRADECE SUA INSCRIÇÃO!!!</p>
+        
+        <a href="#inscricao" class="btn-principal link-secundario">Voltar para a Inscrição</a>
     </section>
 
-    <section id="enriquecimento" class="container-principal">
-        <div class="card-formulario">
-            <h2>3. Enriquecimento do Cadastro (Já Sou Aluno)</h2>
+    <section id="enriquecimento" class="container">
+        <h2>3. Enriquecimento de Dados</h2>
+        
+        <form action="#" method="POST">
             
-            <form action="#" method="POST">
-                
-                <h3>1. Dados Pessoais</h3>
-                <label for="nome_completo">Nome completo:</label>
-                <input type="text" id="nome_completo" name="nome_completo" required>
+            <h3>Dados Pessoais</h3>
+            <label for="nome_completo">Nome completo:</label>
+            <input type="text" id="nome_completo" name="nome_completo">
 
-                <label for="data_nasc">Data de Nascimento:</label>
-                <input type="date" id="data_nasc" name="data_nasc">
-                
-                <label for="cpf">CPF:</label>
-                <input type="text" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00">
+            <label for="data_nasc">Data de Nascimento:</label>
+            <input type="date" id="data_nasc" name="data_nasc">
+            
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00">
 
-                <label for="rg">RG:</label>
-                <input type="text" id="rg" name="rg">
+            <label for="genero">GÊNERO:</label>
+            <select id="genero" name="genero">
+                <option value="">Selecione</option>
+                <option value="fem">Feminino</option>
+                <option value="masc">Masculino</option>
+            </select>
+            
+            <label for="nacionalidade">NACIONALIDADE:</label>
+            <input type="text" id="nacionalidade" name="nacionalidade" value="Brasileira">
 
-                <label for="genero">GÊNERO:</label>
-                <select id="genero" name="genero">
-                    <option value="">Selecione</option>
-                    <option value="fem">Feminino</option>
-                    <option value="masc">Masculino</option>
-                    <option value="outr">Outro</option>
-                </select>
-                
-                <label for="estado_civil">ESTADO CIVIL:</label>
-                <select id="estado_civil" name="estado_civil">
-                    <option value="">Selecione</option>
-                    <option value="solt">Solteiro(a)</option>
-                    <option value="cas">Casado(a)</option>
-                    <option option value="div">Divorciado(a)</option>
-                </select>
-                
-                <label for="nacionalidade">NACIONALIDADE:</label>
-                <input type="text" id="nacionalidade" name="nacionalidade" value="Brasileira">
-                
-                <label for="naturalidade">NATURALIDADE:</label>
-                <input type="text" id="naturalidade" name="naturalidade">
+            <h3>Endereço e Contato</h3>
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" name="cidade">
 
-                <h3>2. Endereço Completo</h3>
-                <label for="logradouro">Logradouro:</label>
-                <input type="text" id="logradouro" name="logradouro">
+            <label for="tel_celular">Telefone Celular:</label>
+            <input type="tel" id="tel_celular" name="tel_celular">
 
-                <label for="numero">Numero:</label>
-                <input type="text" id="numero" name="numero">
+            <label for="linkedin">Linkedin (URL):</label>
+            <input type="url" id="linkedin" name="linkedin">
 
-                <label for="complemento">Complemento:</label>
-                <input type="text" id="complemento" name="complemento">
+            <h3>Outras Informações</h3>
+            
+            <label>POSSUI CNH?</label>
+            <div class="radio-group">
+                <input type="radio" id="cnh_sim" name="cnh" value="sim"> <label for="cnh_sim">Sim</label>
+                <input type="radio" id="cnh_nao" name="cnh" value="nao"> <label for="cnh_nao">Não</label>
+            </div>
+            
+            <label for="tipo_sanguineo">Tipo sanguíneo:</label>
+            <input type="text" id="tipo_sanguineo" name="tipo_sanguineo">
 
-                <label for="bairro">Bairro:</label>
-                <input type="text" id="bairro" name="bairro">
+            <label for="observacao_extra">Observação:</label>
+            <textarea id="observacao_extra" name="observacao_extra"></textarea>
 
-                <label for="cidade">Cidade:</label>
-                <input type="text" id="cidade" name="cidade">
-
-                <label for="uf">UF:</label>
-                <select id="uf" name="uf">
-                    <option value="">Selecione</option>
-                    <option value="PE">PE</option>
-                    <option value="SP">SP</option>
-                    <option value="RJ">RJ</option>
-                </select>
-
-                <label for="cep">CEP:</label>
-                <input type="text" id="cep" name="cep" maxlength="9" placeholder="00000-000">
-
-                <h3>3. Contato</h3>
-                <label for="tel_celular">Telefone Celular / Whatsapp:</label>
-                <input type="tel" id="tel_celular" name="tel_celular">
-
-                <label for="email_contato">E-mail:</label>
-                <input type="email" id="email_contato" name="email_contato">
-
-                <label for="linkedin">Linkedin (URL):</label>
-                <input type="url" id="linkedin" name="linkedin">
-
-                <h3>4. Outras Informações</h3>
-                
-                <label>POSSUI CNH? (RADIO)</label>
-                <div class="radio-group">
-                    <input type="radio" id="cnh_sim" name="cnh" value="sim"> <label for="cnh_sim" class="inline-label">Sim</label>
-                    <input type="radio" id="cnh_nao" name="cnh" value="nao"> <label for="cnh_nao" class="inline-label">Não</label>
-                </div>
-                
-                <label for="categoria">Categoria (A-B-C-D-E) com checkbox:</label>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="cnh_a" name="cnh_cat[]" value="A"> <label for="cnh_a" class="inline-label">A</label>
-                    <input type="checkbox" id="cnh_b" name="cnh_cat[]" value="B"> <label for="cnh_b" class="inline-label">B</label>
-                    <input type="checkbox" id="cnh_c" name="cnh_cat[]" value="C"> <label for="cnh_c" class="inline-label">C</label>
-                    <input type="checkbox" id="cnh_d" name="cnh_cat[]" value="D"> <label for="cnh_d" class="inline-label">D</label>
-                    <input type="checkbox" id="cnh_e" name="cnh_cat[]" value="E"> <label for="cnh_e" class="inline-label">E</label>
-                </div>
-
-                <label for="tipo_sanguineo">Tipo sanguíneo:</label>
-                <input type="text" id="tipo_sanguineo" name="tipo_sanguineo">
-                
-                <label>PCD (radio):</label>
-                <div class="radio-group">
-                    <input type="radio" id="pcd_sim" name="pcd" value="sim"> <label for="pcd_sim" class="inline-label">Sim</label>
-                    <input type="radio" id="pcd_nao" name="pcd" value="nao"> <label for="pcd_nao" class="inline-label">Não</label>
-                </div>
-
-                <label for="observacao_extra">Observação (campo):</label>
-                <textarea id="observacao_extra" name="observacao_extra"></textarea>
-
-                <div class="grupo-botoes">
-                    <button type="submit" class="btn-gravar">GRAVAR</button>
-                    <button type="reset" class="btn-cancelar">CANCELAR</button>
-                    <a href="#inscricao" class="btn-voltar">VOLTAR</a> 
-                </div>
-            </form>
-        </div>
+            <div class="grupo-botoes">
+                <button type="submit" class="btn-gravar">GRAVAR</button>
+                <button type="reset" class="btn-cancelar">LIMPAR</button>
+                <a href="#inscricao" class="btn-voltar">VOLTAR</a> 
+            </div>
+        </form>
     </section>
 </body>
-</html>, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+</html>
 </body>
 </html>
